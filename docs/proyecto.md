@@ -171,6 +171,57 @@ La elección garantiza claridad, accesibilidad y coherencia con una estética na
 
 ---
 
+## 🟢 10. Plan de despliegue
+Este repositorio contiene el código fuente y la documentación del proyecto "VerdeGo".
+Es una aplicación web dinámica para la gestión de una verduleria.
+
+## Tecnologías utilizadas
+* **Frontend:** HTML, CSS, JavaScript.
+* **Backend:** Java (JSP, Servlets).
+* **Patrón de diseño:** MVC con DAOs.
+* **Base de Datos:** MySQL.
+* **Servidor:** Apache Tomcat.
+
+## Comandos
+### Instalar JDK
+sudo apt update
+sudo apt install default-jdk -y
+java -version
+
+### Servidor de base de datos MySQL
+sudo apt install mysql-server -y
+
+### Configuracion de seguridad
+sudo mysql_secure_installation
+
+### Creacion de base de datos y Usuario desde MySQL
+
+CREATE DATABASE verdego_db CHARACTER SET utf8mb4;
+CREATE USER 'verdego_user'@'localhost' IDENTIFIED BY 'password_segura';
+GRANT ALL PRIVILEGES ON verdego_db.* TO 'verdego_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+### Servidor de aplicaciones (Apache Tomcat)
+sudo apt install tomcat9 tomcat9-admin -y
+
+### Configuración del Firewall(nftables)
+**Crear tabla y cadena base (si no existen previamente)**
+sudo nft add table ip filter
+sudo nft add chain ip filter input { type filter hook input priority 0 \; policy accept \; }
+
+**Regla para permitir tráfico TCP en el puerto 8080**
+sudo nft add rule ip filter input tcp dport 8080 ct state new accept
+
+### Despliegue de la aplicación (.WAR)
+
+Habrá que generar el archivo .war desde eclipse y copiarlo al directorio de despliegue de tomcat
+sudo mv verdego.war /var/lib/tomcat9/webapps/
+sudo systemctl restart tomcat9
+
+**El servidor estará disponible en http://<IP-SERVIDOR>:8080/verdego**
+---
+
 ## 🟢 10. Conclusión
 VerdeGo es una aplicación completa y moderna que integra una tienda online funcional, un sistema de fidelización, un panel administrativo y una interfaz limpia basada en principios profesionales de diseño.  
 El proyecto demuestra competencias en diseño UI, desarrollo web y organización de sistemas completos.
